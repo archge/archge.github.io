@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css">
+<title>PracticalVim</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+<div id="第 1 章  *Vim解决问题的方式*"><h2 id="第 1 章  *Vim解决问题的方式*" class="header"><a href="#第 1 章  *Vim解决问题的方式*" class="justcenter">第 1 章  <span id="第 1 章  *Vim解决问题的方式*-Vim解决问题的方式"></span><strong id="Vim解决问题的方式">Vim解决问题的方式</strong></a></h2></div>
+
+<p>
+<span id="第 1 章  *Vim解决问题的方式*-tip1"></span><strong id="tip1">tip1</strong> 认识 . 命令
+</p>
+<blockquote>
+<code>。</code>命令可以让我们重复上次的修改，他是Vim中最为强大的多面手。
+</blockquote>
+<blockquote>
+这是Vim区分模式的编辑模型如此高效的核心原因，究竟什么是修改？
+<code>x</code>命令会删除光标下的字符，再次使用<code>.</code>命令“重复上次修改”时，就会删除光标下的字符。<code>u</code>命令撤销上次的修改。
+<code>dd</code>命令删除整行。
+<code>&gt;G</code>命令会增加当前行到文档末尾处的缩进层级。
+*注意：*从进入INSERT模式那一刻（输入<code>i</code>），直到返回NORMAL模式为止（输入<code>&lt;Esc&gt;</code>），Vim会记录每一个按键操作，从<code>i</code>到<code>&lt;Esc&gt;</code>。做出这样一个修改后再用<code>.</code>命令，将会重新执行这一系列按键操作。
+<code>.</code>命令是一个微内宏（macro）。
+</blockquote>
+
+</body>
+</html>

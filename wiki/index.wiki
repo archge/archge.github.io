@@ -1,3 +1,4 @@
-=Welcome to archge wiki=
-==Hi, I'm GSP. This is my vimwiki with github.==
-This part is on building. Please pay your patience. Thanks.
+ =Welcome to archge wiki=
+email: rainbowdarker@outlook.com
+
+[[PracticalVim]]
