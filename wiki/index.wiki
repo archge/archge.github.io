@@ -1,4 +1,4 @@
  =Welcome to archge wiki=
 email: rainbowdarker@outlook.com
 
-[[PracticalVim]]
+[[PracticalVim]] _updata to tip2_
