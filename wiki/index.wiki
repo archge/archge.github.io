@@ -1,5 +1,8 @@
- =Welcome to archge wiki=
+%title Welcom to archge wiki
+
+= Welcome to archge wiki =
 email: rainbowdarker@outlook.com
 
 
-[[PracticalVim]] _updata to tip2_
+== Book`s Notes ==
+[[PracticalVim]] _updata to tip3 2019-11-21_
