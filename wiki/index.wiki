@@ -10,3 +10,10 @@ email: rainbowdarker@outlook.com
 === 亟待解决的问题 ===
 * [ ] 关于符号$解析为括号 
 * [ ] 文本的对齐方式修改
+
+
+== 几个好玩的游戏 ==
+# 0ad 
+# Nethack
+# teeworlds
+# cataclym-dda
