@@ -5,4 +5,8 @@ email: rainbowdarker@outlook.com
 
 
 == Book`s Notes ==
-[[PracticalVim]] _updata to tip3 2019-11-21_
+[[PracticalVim]] _updata to tip4 2019-11-22_
+
+=== 亟待解决的问题 ===
+* [ ] 关于符号$解析为括号 
+* [ ] 文本的对齐方式修改
