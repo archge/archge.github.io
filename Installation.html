@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css">
+<title>Installation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+<div id="Archlinux 安装笔记"><h1 id="Archlinux 安装笔记" class="header"><a href="#Archlinux 安装笔记">Archlinux 安装笔记</a></h1></div>
+<p>
+<em>参考archwiki官方安装步骤</em>
+</p>
+
+<div id="Archlinux 安装笔记-准备引导工具"><h2 id="准备引导工具" class="header"><a href="#Archlinux 安装笔记-准备引导工具">准备引导工具</a></h2></div>
+<p>
+在archwiki上下载最新的镜像软件，并用USBwrite制作U盘启动盘。
+</p>
+
+<div id="Archlinux 安装笔记-检查引导方式"><h2 id="检查引导方式" class="header"><a href="#Archlinux 安装笔记-检查引导方式">检查引导方式</a></h2></div>
+<pre>
+ls /sys/firmware/efi/efivars
+</pre>
+<p>
+若目录不存在，则以BIOS方式引导；否则以EFI方式引导。（该笔记主要以EFI方式引导）
+</p>
+
+<div id="Archlinux 安装笔记-联网"><h2 id="联网" class="header"><a href="#Archlinux 安装笔记-联网">联网</a></h2></div>
+<p>
+有线且路由支持DHCP
+</p>
+<pre>
+#dhcpcd
+</pre>
+<p>
+无线
+</p>
+<pre>
+#wifi-menu
+</pre>
+<p>
+检查是否连上
+</p>
+<pre>
+#ping www.baidu.com
+</pre>
+
+<div id="Archlinux 安装笔记-更新系统时间"><h2 id="更新系统时间" class="header"><a href="#Archlinux 安装笔记-更新系统时间">更新系统时间</a></h2></div>
+<pre>
+#timedatectl set-ntp true
+</pre>
+<p>
+正常情况下没有输出。
+</p>
+
+<div id="Archlinux 安装笔记-建立硬盘分区"><h2 id="建立硬盘分区" class="header"><a href="#Archlinux 安装笔记-建立硬盘分区">建立硬盘分区</a></h2></div>
+<p>
+查看目前分区情况
+</p>
+<pre>
+#fdisk -l
+</pre>
+<p>
+分区
+</p>
+<pre>
+#cfdisk
+</pre>
+<p>
+本人分区大小：1G EFI system(sda1); 5G swap(sda2); 剩余 根(sda3)。
+</p>
+
+<div id="Archlinux 安装笔记-格式化分区"><h2 id="格式化分区" class="header"><a href="#Archlinux 安装笔记-格式化分区">格式化分区</a></h2></div>
+<table>
+<tr>
+<td>
+引导分区
+</td>
+<td>
+<code>#mkfs.fat -F32 /dev/sda1</code>
+</td>
+</tr>
+<tr>
+<td>
+根分区
+</td>
+<td>
+<code>#mfkfs.ext4 /dev/sda3</code>
+</td>
+</tr>
+<tr>
+<td>
+交换分区
+</td>
+<td>
+<code>#mkswap /dev/sda2</code>
+</td>
+</tr>
+<tr>
+<td>
+&nbsp;
+</td>
+<td>
+<code>#swapon /dev/sda2</code>
+</td>
+</tr>
+</table>
+
+<div id="Archlinux 安装笔记-挂载分区"><h2 id="挂载分区" class="header"><a href="#Archlinux 安装笔记-挂载分区">挂载分区</a></h2></div>
+<p>
+根分区挂载到/mnt
+</p>
+<pre>
+#mount /dev/sda3 /mnt
+</pre>
+
+<p>
+EFI/GPT引导
+</p>
+<pre>
+#mkdir /mnt/boot
+#mount /dev/sda1 /mnt/boot
+</pre>
+
+<p>
+<em>注：交换分区swap没有挂载点</em>
+</p>
+
+<div id="Archlinux 安装笔记-选择镜像源"><h2 id="选择镜像源" class="header"><a href="#Archlinux 安装笔记-选择镜像源">选择镜像源</a></h2></div>
+<p>
+修改文件 /etc/pacman.d/mirrorlist
+推荐源：
+</p>
+<pre>
+http://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+http://mirrors.zju.edu.cn/archlinux/$repo/os/$arch
+</pre>
+
+<div id="Archlinux 安装笔记-安装基本包"><h2 id="安装基本包" class="header"><a href="#Archlinux 安装笔记-安装基本包">安装基本包</a></h2></div>
+<pre>
+#pacstrap /mnt base base-devel linux linux-fireware
+</pre>
+
+<div id="Archlinux 安装笔记-Fstab"><h2 id="Fstab" class="header"><a href="#Archlinux 安装笔记-Fstab">Fstab</a></h2></div>
+<p>
+生成自动挂载分区的fstab文件
+</p>
+<pre>
+#genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+</pre>
+<p>
+检查执行
+</p>
+<pre>
+#cat /mnt/etc/fstab
+</pre>
+
+<div id="Archlinux 安装笔记-Chroot"><h2 id="Chroot" class="header"><a href="#Archlinux 安装笔记-Chroot">Chroot</a></h2></div>
+<pre>
+#arch-chroot /mnt
+</pre>
+
+<div id="Archlinux 安装笔记-时区设置"><h2 id="时区设置" class="header"><a href="#Archlinux 安装笔记-时区设置">时区设置</a></h2></div>
+<pre>
+#ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</pre>
+<p>
+生成 /etc/adjtime
+</p>
+<pre>
+#hwclock --systohc
+</pre>
+
+<div id="Archlinux 安装笔记-下载必要软件"><h2 id="下载必要软件" class="header"><a href="#Archlinux 安装笔记-下载必要软件">下载必要软件</a></h2></div>
+<p>
+因为新的基本包，有些东西需要自己提前下载。
+vim、netctl、wap_supplicant、dhcpcd、dhcline、dialog、ppp
+</p>
+
+<div id="Archlinux 安装笔记-本地化"><h2 id="本地化" class="header"><a href="#Archlinux 安装笔记-本地化">本地化</a></h2></div>
+<p>
+/etc/locale.gen 是一个包含注释文档的文本文件，移除#。
+</p>
+<pre>
+en_US.UTF-8 UTF-8
+zh_CN.UTF-8 UTF-8
+</pre>
+<p>
+生成locale讯息
+</p>
+<pre>
+#locale-gen
+</pre>
+<p>
+创建locale.conf
+</p>
+<pre>
+#echo LANG=en_US.UTF-8 &gt; /etc/locale.conf
+</pre>
+
+<div id="Archlinux 安装笔记-网络"><h2 id="网络" class="header"><a href="#Archlinux 安装笔记-网络">网络</a></h2></div>
+<p>
+创建hostname文件
+</p>
+<pre>
+#echo myname &gt; /etc/hostname
+</pre>
+<p>
+添加对应信息到hosts
+</p>
+<pre>
+#vim /etc/hosts
+127.0.0.1 localhost
+::1		  localhost
+127.0.0.1 myhostname.localdomain myhostname
+</pre>
+<p>
+其中myhostname为你设置的myname。
+</p>
+
+<div id="Archlinux 安装笔记-设置root密码"><h2 id="设置root密码" class="header"><a href="#Archlinux 安装笔记-设置root密码">设置root密码</a></h2></div>
+<pre>
+#passwd
+</pre>
+
+<div id="Archlinux 安装笔记-安装Intel-ucode"><h2 id="安装Intel-ucode" class="header"><a href="#Archlinux 安装笔记-安装Intel-ucode">安装Intel-ucode</a></h2></div>
+<p>
+IntelCPU：intel-ucode
+</p>
+
+<div id="Archlinux 安装笔记-EFI/GPT引导"><h2 id="EFI/GPT引导" class="header"><a href="#Archlinux 安装笔记-EFI/GPT引导">EFI/GPT引导</a></h2></div>
+<p>
+安装grub与efibootmgr
+</p>
+<pre>
+#pacman -S grub efibootmgr
+</pre>
+<p>
+部署grub
+</p>
+<pre>
+#grub-install --target==x86_64-efi --efi-directory=/boot --bootloader-id=grub
+</pre>
+<p>
+生成配置文件
+</p>
+<pre>
+#grub-mkconfig -o /boot/grub/grub.cfg
+</pre>
+
+<div id="Archlinux 安装笔记-重启"><h2 id="重启" class="header"><a href="#Archlinux 安装笔记-重启">重启</a></h2></div>
+<pre>
+#exit
+#reboot
+</pre>
+
+<div id="至此已安装完成Archlinux！"><h1 id="至此已安装完成Archlinux！" class="header"><a href="#至此已安装完成Archlinux！">至此已安装完成Archlinux！</a></h1></div>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+= Archlinux 安装笔记=
+_参考archwiki官方安装步骤_
+
+== 准备引导工具 ==
+在archwiki上下载最新的镜像软件，并用USBwrite制作U盘启动盘。
+
+== 检查引导方式 ==
+{{{
+ls /sys/firmware/efi/efivars
+}}}
+若目录不存在，则以BIOS方式引导；否则以EFI方式引导。（该笔记主要以EFI方式引导）
+
+== 联网 ==
+有线且路由支持DHCP
+{{{
+#dhcpcd
+}}}
+无线
+{{{
+#wifi-menu
+}}}
+检查是否连上
+{{{
+#ping www.baidu.com
+}}}
+
+== 更新系统时间 ==
+{{{
+#timedatectl set-ntp true
+}}}
+正常情况下没有输出。
+
+== 建立硬盘分区 ==
+查看目前分区情况
+{{{
+#fdisk -l
+}}}
+分区
+{{{
+#cfdisk
+}}}
+本人分区大小：1G EFI system(sda1); 5G swap(sda2); 剩余 根(sda3)。
+
+== 格式化分区 ==
+| 引导分区 | `#mkfs.fat -F32 /dev/sda1` |
+| 根分区   | `#mfkfs.ext4 /dev/sda3`    |
+| 交换分区 | `#mkswap /dev/sda2`        |
+|          | `#swapon /dev/sda2`        |
+
+== 挂载分区 ==
+根分区挂载到/mnt
+{{{
+#mount /dev/sda3 /mnt
+}}}
+
+EFI/GPT引导
+{{{
+#mkdir /mnt/boot
+#mount /dev/sda1 /mnt/boot
+}}}
+
+_注：交换分区swap没有挂载点_
+
+== 选择镜像源 ==
+修改文件 /etc/pacman.d/mirrorlist
+推荐源：
+{{{
+http://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+http://mirrors.zju.edu.cn/archlinux/$repo/os/$arch
+}}}
+
+== 安装基本包 ==
+{{{
+#pacstrap /mnt base base-devel linux linux-fireware
+}}}
+
+== Fstab ==
+生成自动挂载分区的fstab文件
+{{{
+#genfstab -U /mnt >> /mnt/etc/fstab
+}}}
+检查执行
+{{{
+#cat /mnt/etc/fstab
+}}}
+
+== Chroot ==
+{{{
+#arch-chroot /mnt
+}}}
+
+== 时区设置 ==
+{{{
+#ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+}}}
+生成 /etc/adjtime
+{{{
+#hwclock --systohc
+}}}
+
+== 下载必要软件 ==
+因为新的基本包，有些东西需要自己提前下载。
+vim、netctl、wap_supplicant、dhcpcd、dhcline、dialog、ppp
+
+== 本地化 ==
+/etc/locale.gen 是一个包含注释文档的文本文件，移除#。
+{{{
+en_US.UTF-8 UTF-8
+zh_CN.UTF-8 UTF-8
+}}}
+生成locale讯息
+{{{
+#locale-gen
+}}}
+创建locale.conf
+{{{
+#echo LANG=en_US.UTF-8 > /etc/locale.conf
+}}}
+
+== 网络 ==
+创建hostname文件
+{{{
+#echo myname > /etc/hostname
+}}}
+添加对应信息到hosts
+{{{
+#vim /etc/hosts
+127.0.0.1 localhost
+::1		  localhost
+127.0.0.1 myhostname.localdomain myhostname
+}}}
+其中myhostname为你设置的myname。
+
+== 设置root密码 ==
+{{{
+#passwd
+}}}
+
+== 安装Intel-ucode ==
+IntelCPU：intel-ucode
+
+== EFI/GPT引导 ==
+安装grub与efibootmgr
+{{{
+#pacman -S grub efibootmgr
+}}}
+部署grub
+{{{
+#grub-install --target==x86_64-efi --efi-directory=/boot --bootloader-id=grub
+}}}
+生成配置文件
+{{{
+#grub-mkconfig -o /boot/grub/grub.cfg
+}}}
+
+== 重启 ==
+{{{
+#exit
+#reboot
+}}}
+
+=至此已安装完成Archlinux！=

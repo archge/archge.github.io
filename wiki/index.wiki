@@ -1,11 +1,14 @@
 %title Welcom to archge wiki
 
 = Welcome to archge wiki =
-email: rainbowdarker@outlook.com
-
+*Email:* rainbowdarker@outlook.com
+*Archwiki:* rainbowdarker
 
 == Book`s Notes ==
 [[PracticalVim]] _* updata to tip9 2019-11-26_
+
+== Archlinux Installation Notes ==
+[[Installation]] _2019-11-26_
 
 === 亟待解决的问题 ===
 * [ ] 关于符号$解析为括号 
