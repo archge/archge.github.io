@@ -414,6 +414,131 @@
 <p>
 	在什么情况下使用次数更好呢？在上述例子中如果要改为“Delete that one word”，也就是说在删除后还要进行编辑，这时<code>cw</code>命令是能够进入编辑模式的，而<code>.</code>命令不可以。于是，采用次数的方式更加有利。
 </p>
+	
+<div id="第二章 普通模式-tip12 双剑合壁，天下无敌"><h3 id="tip12 双剑合壁，天下无敌" class="header"><a href="#第二章 普通模式-tip12 双剑合壁，天下无敌">tip12 双剑合壁，天下无敌</a></h3></div>
+
+<p>
+	<span id="第二章 普通模式-tip12 双剑合壁，天下无敌-操作符 + 动作命令 = 操作"></span><strong id="操作符 + 动作命令 = 操作">操作符 + 动作命令 = 操作</strong>
+</p>
+	
+<p>
+	<code>d{motion}</code>命令可以对一个字符<code>dw</code>、一个完整单词<code>daw</code>或一整个段落<code>dap</code>进行操作，它作用的范围由动作命令决定。<code>c{motion}</code>、<code>y{motion}</code>以及其他一些命令也类似，统称为 <span id="第二章 普通模式-tip12 双剑合壁，天下无敌-操作符operator"></span><strong id="操作符operator">操作符operator</strong> 。可用:h operator查阅。
+</p>
+	
+<p>
+	额外规则，当一个操作符命令被连续调用两次时，它会作用于当前行。
+</p>
+	
+<table class='center'>
+<tr>
+<th>
+操作符命令
+</th>
+<th>
+用途
+</th>
+</tr>
+<tr>
+<td>
+<code>c</code>
+</td>
+<td>
+修改
+</td>
+</tr>
+<tr>
+<td>
+<code>d</code>
+</td>
+<td>
+删除
+</td>
+</tr>
+<tr>
+<td>
+<code>y</code>
+</td>
+<td>
+复制到寄存器
+</td>
+</tr>
+<tr>
+<td>
+<code>g~</code>
+</td>
+<td>
+反转大小写
+</td>
+</tr>
+<tr>
+<td>
+<code>gu</code>
+</td>
+<td>
+转换为小写
+</td>
+</tr>
+<tr>
+<td>
+<code>gU</code>
+</td>
+<td>
+转换为大写
+</td>
+</tr>
+<tr>
+<td>
+<code>&gt;</code>
+</td>
+<td>
+增加缩进
+</td>
+</tr>
+<tr>
+<td>
+<code>&lt;</code>
+</td>
+<td>
+减小缩进
+</td>
+</tr>
+<tr>
+<td>
+<code>=</code>
+</td>
+<td>
+自动缩进
+</td>
+</tr>
+<tr>
+<td>
+<code>!</code>
+</td>
+<td>
+使用外部程序过滤{motion}所跨越的行
+</td>
+</tr>
+</table>
+	
+<p>
+	<span id="第二章 普通模式-tip12 双剑合壁，天下无敌-操作符待决模式"></span><strong id="操作符待决模式">操作符待决模式</strong>
+</p>
+	
+<p>
+	除了普通、插入及可视模式外，Vim还有操作符待决模式（operator-pending mode）。例如，在执行命令<code>dw</code>时，就会激活该模式，这一模式只在按d及w键之间的短暂时间间隔内存在。当操作符待决模式被激活时，也可以使用&lt;Esc&gt;中止该操作，返回到普通模式。
+</p>
+	
+<p>
+	很多命令都由两个或更多的按键来调用，如<code>gu</code>等。在大多数情况下，头一个按键只是第二个按键的前缀，这些命令不会激活操作符待决模式。可以把它们当成命名空间（namespace），用来扩充可用命令数目。
+</p>
+	
+<p>
+	命名空间命令的存在意义？能够创建自定义映射项来激活或终止操作符待决模式。
+</p>
+	
+<p>
+	<em>注：扩展命令插间 tpopt/vim-commentary</em>
+</p>
 
 </body>
 </html>
