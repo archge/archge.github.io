@@ -5,7 +5,7 @@
 *Archwiki:* rainbowdarker
 
 == Book`s Notes ==
-[[PracticalVim]] _updata to tip13 2019-11-30_
+[[PracticalVim]] _updata to tip14 2019-12-2_
 
 == Archlinux Installation Notes ==
 [[Installation]] _2019-11-26_
