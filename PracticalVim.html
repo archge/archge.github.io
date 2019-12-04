@@ -623,6 +623,36 @@
 <p>
 	在此模式中，可以执行一个普通模式命令，执行完后，马上返回到插入模式。例如，用<code>zz</code>可以重绘屏幕，把当前行显示在窗口正中，考虑<code>&lt;C-o&gt;zz</code>有什么效果，并会带来曾样的好处？
 </p>
+	
+<div id="第3章 插入模式-tip15 不离开插入模式，粘贴寄存器中的文本"><h3 id="tip15 不离开插入模式，粘贴寄存器中的文本" class="header"><a href="#第3章 插入模式-tip15 不离开插入模式，粘贴寄存器中的文本">tip15 不离开插入模式，粘贴寄存器中的文本</a></h3></div>
+
+<p>
+	下面是一段尚未完成的文本
+</p>
+	
+<pre>
+ Practical Vim, by Drew Neil
+ Read Drew Neil's
+</pre>
+
+<p>
+	现在把本书的书名插入到最后一行，以补全该行。做如下动作：
+</p>
+<ol>
+<li>
+<code>yt.</code>动作，当前光标在第一行的“P”。该命令把“Practical Vim”复制到 <span id="第3章 插入模式-tip15 不离开插入模式，粘贴寄存器中的文本-复制专用寄存器"></span><strong id="复制专用寄存器">复制专用寄存器</strong> 中。
+
+<li>
+<code>jA_</code>动作，移动光标到第二行然后进入插入模式。
+
+<li>
+<code>&lt;C-r&gt;0</code>动作，把刚才复制的文本粘贴到光标所在位置。
+
+</ol>
+	
+<p>
+	<code>&lt;C-r&gt;{register}</code>命令，其中{register}是寄存器的名字（参见 :h i_CTRL-R）。相当与，复制文本。<code>&lt;C-r&gt;&lt;C-p&gt;{register}</code>命令，相当与，按原格式复制文本。
+</p>
 
 </body>
 </html>
