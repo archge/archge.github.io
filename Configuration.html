@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css">
+<title>Configuration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+<div id="Archlinux安装后配置"><h1 id="Archlinux安装后配置" class="header"><a href="#Archlinux安装后配置">Archlinux安装后配置</a></h1></div>
+
+<div id="Archlinux安装后配置-创建交换文件"><h2 id="创建交换文件" class="header"><a href="#Archlinux安装后配置-创建交换文件">创建交换文件</a></h2></div>
+<p>
+在分区时没有创建swap区时执行。
+</p>
+
+<pre>
+ #fallocate -l 512M /swapfile		分配块空间用于交换文件
+ #chmod 600 /swapfile				更改权限
+ #mkswap /swapfile					设置交换文件
+ #swapon /swapfile					启用
+ #nano /etc/fstab
+  /swapfile none swap defaults 0 0	最后一行写入
+</pre>
+
+<div id="Archlinux安装后配置-新建用户并配置sudo"><h2 id="新建用户并配置sudo" class="header"><a href="#Archlinux安装后配置-新建用户并配置sudo">新建用户并配置sudo</a></h2></div>
+<pre>
+ #useradd -m -g users -s /bin/bash 用户名
+ #passwd 用户名
+ #nano /etc/sudoers
+  用户名 ALL = (ALL)ALL 			最后一行写入
+</pre>
+
+<div id="Archlinux安装后配置-图形界面的安装"><h2 id="图形界面的安装" class="header"><a href="#Archlinux安装后配置-图形界面的安装">图形界面的安装</a></h2></div>
+<ol>
+<li>
+显卡驱动 xf86-video-intel
+
+<li>
+图形服务 xorg xorg-xinit
+
+<li>
+触板驱动 xf86-input-synaptics
+
+</ol>
+
+<div id="Archlinux安装后配置-包源"><h2 id="包源" class="header"><a href="#Archlinux安装后配置-包源">包源</a></h2></div>
+<p>
+用root打开 /etc/pacman.conf ，在末尾写入
+</p>
+<pre>
+ [archlinuxcn]
+ SigLevel = Never
+ Serrer = https://mirrorstuna.tsinghua.edu.cn/archlinuxcn/$arch
+</pre>
+
+<p>
+生效 <code>#sudo pacman -S archlinuxcn-keyring</code>
+同步 <code>#sudo pacman -Sy</code>
+</p>
+
+<div id="Archlinux安装后配置-yaourt"><h2 id="yaourt" class="header"><a href="#Archlinux安装后配置-yaourt">yaourt</a></h2></div>
+<p>
+安装 <code>#sudo pacman -S yaourt</code>
+更新 <code>#yaourt -Syu --aur</code>
+</p>
+
+<div id="Archlinux安装后配置-中文支持"><h2 id="中文支持" class="header"><a href="#Archlinux安装后配置-中文支持">中文支持</a></h2></div>
+<p>
+中文输入法安装 fcitx fcitx-im fcitx-configtool fcitx-googlepinyin
+配置（在<code>.xinitrc</code>文件中加入）
+</p>
+<pre>
+export LANG=zh_CN.UTF-8
+export LANGUAGE=zh_CN:en_US
+export LC_CTYPE=en_US.UTF-8
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+</pre>
+<p>
+中文字体 wqy-microhei 文泉译微米黑，无衬线字体
+</p>
+
+<div id="Archlinux安装后配置-终端 oh-my-zsh"><h2 id="终端 oh-my-zsh" class="header"><a href="#Archlinux安装后配置-终端 oh-my-zsh">终端 oh-my-zsh</a></h2></div>
+<p>
+准备并设为默认
+</p>
+<pre>
+ #pacman -S zsh git wget
+ #chsh -s $(which zsh)
+</pre>
+
+<p>
+安装 oh-my-zsh
+</p>
+<pre>
+ #sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+</pre>
+
+<p>
+配置文件（.zshrc）
+</p>
+<ol>
+<li>
+主题 <code>ZSH_THEME="rkj-repos</code>
+
+<li>
+插件 <code>plugins=(git)</code>
+
+<li>
+简化命令 <code>alias ll = 'ls -l'</code>
+
+</ol>
+
+<p>
+更新
+</p>
+<ol>
+<li>
+手动 <code>#$upgrade_oh_my_zsh</code> 或 <code>#source .zshrc</code>
+
+<li>
+自动 在.zshrc中添加 <code>DISABLE_UPDATE_PROMPT = true</code>
+
+<li>
+卸载 <code>#uninstall_oh_my_zsh</code>
+
+</ol>
+
+<p>
+终端模拟软件 terminator
+</p>
+
+<div id="Archlinux安装后配置-资源管理器"><h2 id="资源管理器" class="header"><a href="#Archlinux安装后配置-资源管理器">资源管理器</a></h2></div>
+<ol>
+<li>
+终端下 ranger
+
+<li>
+桌面下 pcmanfm
+
+</ol>
+
+<div id="Archlinux安装后配置-软件推荐"><h2 id="软件推荐" class="header"><a href="#Archlinux安装后配置-软件推荐">软件推荐</a></h2></div>
+<ol>
+<li>
+编辑器 		vim
+
+<li>
+浏览器		firefox
+
+<li>
+装逼神器		screenfetch
+
+<li>
+屏幕抓图		scrot
+
+<li>
+办公套件		libreoffice
+
+<li>
+工程计算		octave
+
+<li>
+PDF			foxitrader
+
+<li>
+邮件			thunderbird
+
+</ol>
+
+</body>
+</html>
