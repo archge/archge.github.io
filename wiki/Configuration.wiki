@@ -5,9 +5,9 @@
 
 {{{
  #fallocate -l 512M /swapfile		分配块空间用于交换文件
- #chmod 600 /swapfile				更改权限
- #mkswap /swapfile					设置交换文件
- #swapon /swapfile					启用
+ #chmod 600 /swapfile               更改权限
+ #mkswap /swapfile                  设置交换文件
+ #swapon /swapfile                  启用
  #nano /etc/fstab
   /swapfile none swap defaults 0 0	最后一行写入
 }}}
@@ -34,14 +34,17 @@
 }}}
 
 生效 `#sudo pacman -S archlinuxcn-keyring`
+
 同步 `#sudo pacman -Sy`
 
 ==yaourt==
 安装 `#sudo pacman -S yaourt`
+
 更新 `#yaourt -Syu --aur`
 
 ==中文支持==
 中文输入法安装 fcitx fcitx-im fcitx-configtool fcitx-googlepinyin
+
 配置（在`.xinitrc`文件中加入）
 {{{
 export LANG=zh_CN.UTF-8
@@ -51,6 +54,7 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
 }}}
+
 中文字体 wqy-microhei 文泉译微米黑，无衬线字体
 
 ==终端 oh-my-zsh==
