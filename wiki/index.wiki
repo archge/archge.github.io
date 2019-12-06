@@ -9,7 +9,7 @@
 
 == Archlinux Installation Notes ==
 # [[Installation]] _2019-11-26_
-# [[Configuration]] 2019-12-06
+# [[Configuration]] _2019-12-06_
 
 === 亟待解决的问题 ===
 * [ ] 关于符号$解析为括号 
